@@ -100,4 +100,24 @@ $(document).ready( function() {
         },
     ];
 
+    const container = $('.icons');
+
+    printIcons(icons, container);
+
 });
+
+//Function print icons
+function printIcons (icons, container) {
+
+    icons.forEach((icon) => {
+        const {family, prefix, name} = icon;
+
+        const html = `<div class="icon">
+        <i class="${family} ${prefix}${name}"></i>
+        <div class="title">cat</div>
+    </div>`
+
+    container.append(html);
+    
+    });
+}
