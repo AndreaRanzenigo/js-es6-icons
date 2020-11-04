@@ -102,21 +102,38 @@ $(document).ready( function() {
 
     const container = $('.icons');
 
-    //printIcons(icons, container);
     const colors = ['blue', 'orange', 'purple'];
 
     const coloredIcon = colorIcon(icons, colors);
+    console.log(coloredIcon);
+    printIcons(coloredIcon, container);
 
+    //Select types
+    const types = getType(icons);
+    const select = $('#type');
+
+    genOption(types, select);
+
+    //Select event change
+    select.change(() => {
+        const selected = select.val();
+        console.log(selected);
+
+        const filteredIcons = filterIcons(coloredIcon, selected);
+        printIcons = (filteredIcons, container);
+    });
 });
 
 //Function print icons
 function printIcons (icons, container) {
 
+    container.html('');
+
     icons.forEach((icon) => {
-        const {family, prefix, name} = icon;
+        const {family, prefix, name, color} = icon;
 
         const html = `<div class="icon">
-        <i class="${family} ${prefix}${name}"></i>
+        <i class="${family} ${prefix}${name}" style="color: ${color}"></i>
         <div class="title">${name}</div>
     </div>`
 
@@ -129,6 +146,17 @@ function printIcons (icons, container) {
 function colorIcon(icons, colors) {
     const types = getType(icons);
     console.log(types);
+
+    const coloredIcon = icons.map((icon) => {
+        const indexType = types.indexOf(icon.type);
+        
+        return {
+            ...icon,
+            color: colors[indexType]
+        }
+    });
+
+    return coloredIcon;
 }
 
 //Function type category
@@ -143,3 +171,24 @@ function getType(icons) {
 
     return types;
 }
+
+//Function generate option
+function genOption(types, select) {
+    types.forEach((option) => {
+        select.append(`<option value="${option}">${option}</option>`);
+    });
+};
+
+//Function filter icon
+function filterIcons(coloredIcon, selected) {
+
+    if (selected === 'all') {
+        return coloredIcon;
+    }
+
+    const filtered = coloredIcon.filter((icon) => {
+        return icon.type === selected;
+    });
+
+    return filtered;
+};
