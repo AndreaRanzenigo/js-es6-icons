@@ -102,7 +102,10 @@ $(document).ready( function() {
 
     const container = $('.icons');
 
-    printIcons(icons, container);
+    //printIcons(icons, container);
+    const colors = ['blue', 'orange', 'purple'];
+
+    const coloredIcon = colorIcon(icons, colors);
 
 });
 
@@ -114,10 +117,29 @@ function printIcons (icons, container) {
 
         const html = `<div class="icon">
         <i class="${family} ${prefix}${name}"></i>
-        <div class="title">cat</div>
+        <div class="title">${name}</div>
     </div>`
 
     container.append(html);
-    
+
     });
+}
+
+//Function colored icons
+function colorIcon(icons, colors) {
+    const types = getType(icons);
+    console.log(types);
+}
+
+//Function type category
+function getType(icons) {
+    const types = [];
+
+    icons.forEach((icon) => {
+        if (! types.includes(icon.type)) {
+            types.push(icon.type);
+        }
+    });
+
+    return types;
 }
