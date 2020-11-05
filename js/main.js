@@ -120,7 +120,7 @@ $(document).ready( function() {
         console.log(selected);
 
         const filteredIcons = filterIcons(coloredIcon, selected);
-        printIcons = (filteredIcons, container);
+        printIcons(filteredIcons, container);
     });
 });
 
